@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mobilitydb-aws
+spec:
+  selector:
+   matchLabels:
+    app: mobilitydb-aws
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mobilitydb-aws
+    spec:
+      containers:
+        - name: mobilitydb-aws
+          image: bouzouidja/mobilitydb-aws:latest
+          imagePullPolicy: "IfNotPresent"
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+---
+    kind: PersistentVolume
+    apiVersion: v1
+    metadata:
+      name: postgres-pv-volume
+      labels:
+        type: local
+        app: mobilitydb-aws
+    spec:
+      storageClassName: manual
+      capacity:
+        storage: 5Gi
+      accessModes:
+        - ReadWriteMany
+      hostPath:
+        path: "/mnt/data"
+---
+    kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: postgres-pv-claim
+      labels:
+        app: mobilitydb-aws
+    spec:
+      storageClassName: manual
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 5Gi
+---
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: postgres-config
+      labels:
+        app: mobilitydb-aws
+    data:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: mobilitydb-aws
+      labels:
+        app: mobilitydb-aws
+    spec:
+       ports:
+        - name: mobilitydb-aws
+          port: 5432
+          nodePort: 30200
+       type: NodePort
+       selector:
+        app: mobilitydb-aws

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+
+<!ENTITY last_release_version "1.0">
+
+<!ENTITY manual SYSTEM "manual.xml">
+
+
+]>
+<book lang="en">
+	<bookinfo>
+		<title>MobilityDB-AWS User's Manual</title>
+		<author>
+			<firstname>Sid Ahmed</firstname>
+			<surname>BOUZOUIDJA</surname>
+			<affiliation>
+				<orgname>Université libre de Bruxelles, Belgium</orgname>
+			</affiliation>
+		</author>
+
+		<pubdate>06.25.2021</pubdate>
+		<abstract>
+			<para>MobilityDB is an open source moving object database system. It is based on PostgreSQL and built on top of PostGIS extension. It provides an effective functionality and new data types in order to store, analyze data trajectory.</para>
+			<para> As MobilityDB deal with a large dataset and complex queries, the cost will be very expensive in term of CPU and memory consuming. This behavior cannot be supported by a single host machine. There is a way to make the MobilityDB queries more powerful and takes less execution time, is to scaling up across a cluster of nodes. We were thinking on the On-premises cluster of machine, but this is not enough according to the rapid grows of technologies and 5G network deployment sooner that will make the MobilityDB dataset drastically big. In this respect the effective way to scale up the MobilityDB is to create our cluster on Cloud services and using an orchestration as a control plane that manage the cluster. We have used another tool which is a Citus Data to gain more performance by partitioning tables to produce shards in a single node.</para>
+			<para>In this report we will show you how to deploy and scale up MobilityDB ecosystem on AWS Cloud services. All the deployment manifests and configuration files, docker images and the requirements it located in this <ulink url="https://github.com/bouzouidja/MobilityDB-AWS.git">Github repository</ulink>.</para>
+		</abstract>
+	</bookinfo>
+
+	&manual;
+	
+
+</book>
