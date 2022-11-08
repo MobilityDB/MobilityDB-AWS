@@ -4,7 +4,7 @@ FROM postgres:13.4
 ARG VERSION=10.1.2
 LABEL maintainer="Scale MobilityDB project https://" \
       org.label-schema.name="MobilityDB in AWS" \
-      org.label-schema.description="Deploying MobilityDB in AWS services" \
+      org.label-schema.description="Sharding PostgreSQL database using Citus extension on top of MobilityDB extension" \
       org.label-schema.version=${VERSION} \
       org.label-schema.schema-version="1.0"
 

@@ -33,7 +33,7 @@ cd MobilityDB-AWS
 docker build -t bouzouidja/mobilitydb-aws .
 ```
 
-Or you can pull the image from directely from the docker hub
+Or you can pull the image directely from the docker hub
 
 ```bash
 docker pull bouzouidja/mobilitydb-aws:latest
