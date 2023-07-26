@@ -167,7 +167,7 @@ You should see three nodes created in the terminal and in the AWS interface for 
 
 
 
-### Deploy mobilitydb_aws image using kubectl
+### Deploy mobilitydb-aws image using kubectl
 
 We have prepared a manifest yaml file that define the environment of our workload MobilityDB in AWS. It contain the basics information and configuration in order to configure our Kubernetes cluster.
 
@@ -295,7 +295,7 @@ Getting some shards of the AISInput table.
 
 ```
 
-Auto scaling AWS service 
+Scaling MobilityDB in EKS cluster 
 ------------
 As we have a complex MobilityDB queries, we may use the Vertical Autoscaler and the Horizontal Autoscaler provided by AWS services to optimize the cost according to the query needs.
 
@@ -333,28 +333,10 @@ kubectl get pods -n kube-system
 
 ``` 
 
-### Horizontal Pod scaling using the Autoscaler
-
-
-The horizontal Autoscaler provides AWS to increase the number of pods within the cluster, it's a replication controller. This can help the application scale out to meet increased demand or scale in when resources are not needed, the Horizontal Pod Autoscaler makes application to meet the resources target.
-
-Before deploying the Horizontal autoscaler, we need the Kubernetes Metric server.
-The metric server is an API that collect the ressources statistics from the cluster and expose them for the use of the autoscaler. For more information about the metric server see [here](https://github.com/kubernetes-sigs/metrics-server).
-
-
-Deploy the metric server
-```bash
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-
-``` 
-There is a tutorial that show how to deploy the horizontal scaller using apache web server application  
-[here](https://docs.aws.amazon.com/eks/latest/userguide/horizontal-pod-autoscaler.html)
-
-
-Deployment using Citus cluster and AWS EC2 instances
+Scaling citus cluster using AWS EC2 instances
 ------------
 
-### Deploy mobilitydb-aws as standalone
+### Scaling MobilityDB as standalone mode
 Before doing this step you need to connect within your AWS EC2 machine known as master node. We have already create and configure one AWS EC2 host master node and some AWS EC2 host worker node.
 - You can run the image as standalone using docker run command, Execute this on all cluster's nodes.
 ```bash
@@ -395,7 +377,7 @@ fill free to fill the table mobilitydb_table before or after the distribution. A
 
 
 
-### Deploy mobilitydb-aws image using citus manager
+### Scaling MobilityDB using citus manager
 This deployment is similar to the last one, except that we have a manager node. It simply listens for new containers tagged with the worker role, then adds them to the config file in a volume shared with the master node. 
 
 - In the same repository mobilitydb-aws, run the image as Citus cluster using this following
