@@ -258,7 +258,7 @@ kubectl exec -it  mobilitydb-aws-7d745544dd-dkm7k -- psql -h 192.168.45.32 -U po
 
 
 ```
-### Run MobilityDB queries
+### Testing MobilityDB
 .....
 In order to make the MobilityDB queries more powerfull, we have used the single node citus that create shards for distributed tables.
 There is a simple dataset from AIS data, it is prepared to simulate MobilityDB queries. You can find it [here](https://github.com/MobilityDB/MobilityDB-AWS/tree/master/data). You can mount more data in the /mnt/data from host machine to the Cloud in order to test complex analytics queries.  
