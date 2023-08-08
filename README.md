@@ -1,8 +1,8 @@
-# Scaling MobilityDB in AWS Cloud services
+# Scaling MobilityDB in AWS Cloud Services
 
-This repository provides configuration files in order to deploy MobilityDB in AWS Cloud service using Elastic Kubernetes service and Citus data.
+This repository show how to distributes PostgreSQL database on Elastic Kubernetes Service (EKS) provided by AWS cloud provider. The goal is to scaling moving object database supported by MobilityDB extension for PostgreSQL in order to idealize the performance. We have chosen Citus extension for PostgreSQL, to partitioning the data and distributing the query across the cluster.
 
-We prepared an image that combine MobilityDB environement and citus environement built on top of it.
+We prepared an image that combine MobilityDB environement and Citus environement built on top of it.
 In addition you can find in the doc folder a different way to scale MobilityDB in AWS Cloud and we described the architecture of Elastic Kubernetes Service. 
 
 
@@ -46,7 +46,7 @@ docker pull bouzouidja/mobilitydb-aws:latest
 Deployment using Elastic Kubernetes Service cluster
 ------------
 
-### Install requirements
+### Install Requirements
 Before running this step, we assume that you have created an AWS kubernetes cluster using the EKS command-line.
 
 1. Install kubectl
@@ -124,7 +124,7 @@ At this stage we can manage our AWS services remotely from our machine through t
 ~/.aws/credentials
 ```
 
-### Create an Amazon EKS cluster (control plane)
+### Create an Amazon EKS Cluster
 
 1. Run the following eksctl command to create a cluster using Elastic Kubernetes Service
 ```bash
@@ -167,7 +167,7 @@ You should see three nodes created in the terminal and in the AWS interface for 
 
 
 
-### Deploy mobilitydb-aws image using kubectl
+### Deploy mobilitydb-aws Image Using kubectl
 
 We have prepared a manifest yaml file that define the environment of our workload MobilityDB in AWS. It contain the basics information and configuration in order to configure our Kubernetes cluster.
 
@@ -233,7 +233,7 @@ kubectl get pod -owide
 ```
 In my case, mobilitydb-aws have pod name as mobilitydb-aws-7d745544dd-dkm7k and is running in the node 192.168.45.32.
 
-As we have the host ip and the name of pod that run our scale MobilityDB environement instance, we can use the following command to connect to our postgres database, the password for postgres user is postgres. We can run our psql client within the pod mobilitydb-aws to confirm that citus and MobilityDB extension it's well created.
+As we have the host ip and the name of pod that run our scale MobilityDB environement instance, we can use the following command to connect to our postgres database, the password for postgres user is postgres. We can run our psql client within the pod mobilitydb-aws to confirm that Citus and MobilityDB extension it's well created.
 
 ```bash
 
@@ -260,9 +260,9 @@ kubectl exec -it  mobilitydb-aws-7d745544dd-dkm7k -- psql -h 192.168.45.32 -U po
 ```
 ### Testing MobilityDB
 .....
-In order to make the MobilityDB queries more powerfull, we have used the single node citus that create shards for distributed tables.
+In order to make the MobilityDB queries more powerfull, we have used the single node Citus that create shards for distributed tables.
 There is a simple dataset from AIS data, it is prepared to simulate MobilityDB queries. You can find it [here](https://github.com/MobilityDB/MobilityDB-AWS/tree/master/data). You can mount more data in the /mnt/data from host machine to the Cloud in order to test complex analytics queries.  
-Also we have prepared the MobilityDB environement in order to use the queries of the AIS workshop. The extension MobilityDB and citus is created, the table aisinput already created and filled with the mobility_dataset.csv. Finally the aisinput is sharded using citus distribute table as single node. 
+Also we have prepared the MobilityDB environement in order to use the queries of the AIS workshop. The extension MobilityDB and citus is created, the table aisinput already created and filled with the mobility_dataset.csv. Finally the aisinput is sharded using Citus distribute table as single node. 
 
 
 Select some aisinput.
@@ -295,11 +295,11 @@ Getting some shards of the AISInput table.
 
 ```
 
-Scaling MobilityDB in EKS cluster 
+Scaling MobilityDB in EKS Cluster 
 ------------
 As we have a complex MobilityDB queries, we may use the Vertical Autoscaler and the Horizontal Autoscaler provided by AWS services to optimize the cost according to the query needs.
 
-### Vertical Pod scaling using the Autoscaler
+### Vertical Pod Scaling Using the Autoscaler
 
 The vertical scaling that provide AWS it's a mechanism allows us to adjust automatically the pods ressources. This adjustment decrease the cluster cost and can free up cpu and memory to other pods that may need it. The vertical autoscaler analyze the pods demand in order to see if the CPU and memory requirements are appropriate. If adjustments are needed, the vpa-updater relaunches the pods with updated values. 
 
@@ -333,10 +333,10 @@ kubectl get pods -n kube-system
 
 ``` 
 
-Scaling citus cluster using AWS EC2 instances
+Scaling Citus Cluster Using AWS EC2 Instances
 ------------
 
-### Scaling MobilityDB as standalone mode
+### Scaling MobilityDB as Standalone Mode
 Before doing this step you need to connect within your AWS EC2 machine known as master node. We have already create and configure one AWS EC2 host master node and some AWS EC2 host worker node.
 - You can run the image as standalone using docker run command, Execute this on all cluster's nodes.
 ```bash
@@ -360,7 +360,7 @@ select master_get_active_worker_nodes();
 --  (new-node,5432)
 -- (1 row)
 ```
-Let create MobilityDB table and distribute it on column_dist in order to create shards by hashing the column_dist values. If no nodes added on the cluster than the distribution is seen as single node citus otherwise is multi nodes citus.
+Let create MobilityDB table and distribute it on column_dist in order to create shards by hashing the column_dist values. If no nodes added on the cluster than the distribution is seen as single node Citus otherwise is multi nodes Citus.
 
 ```sql
 CREATE TABLE mobilitydb_table(
@@ -377,7 +377,7 @@ fill free to fill the table mobilitydb_table before or after the distribution. A
 
 
 
-### Scaling MobilityDB using citus manager
+### Scaling MobilityDB Using Citus Manager
 This deployment is similar to the last one, except that we have a manager node. It simply listens for new containers tagged with the worker role, then adds them to the config file in a volume shared with the master node. 
 
 - In the same repository mobilitydb-aws, run the image as Citus cluster using this following
@@ -396,7 +396,7 @@ docker-compose -p mobilitydb-aws up
 
 ```
 
-You can run more workers in order to scale the citus cluster by running:
+You can run more workers in order to scale the Citus cluster by running:
 
 ```bash
 docker-compose -p mobilitydb-aws scale worker=5
