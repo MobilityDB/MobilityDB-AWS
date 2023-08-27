@@ -2,17 +2,10 @@
 
 This repository show how to distributes PostgreSQL database on Elastic Kubernetes Service (EKS) provided by AWS cloud provider. The goal is to scaling moving object database supported by MobilityDB extension for PostgreSQL in order to idealize the performance. We have chosen Citus extension for PostgreSQL, to partitioning the data and distributing the query across the cluster.
 
-We prepared an image that combine MobilityDB environement and Citus environement built on top of it.
-In addition you can find in the doc folder a different way to scale MobilityDB in AWS Cloud and we described the architecture of Elastic Kubernetes Service. 
-
 
 [MobilityDB](https://github.com/ULB-CoDE-WIT/MobilityDB) is an open source software program that adds support for temporal and spatio-temporal objects to the [PostgreSQL](https://www.postgresql.org/) database and its spatial extension [PostGIS](http://postgis.net/).
 
-
-Citus is a PostgreSQL-based distributed RDBMS. Is an open source extension build on top of PostgreSQL, it transform a PostgreSQL database into a distributed environment in order to allow the horizontal scalability, Citus employs distributed tables, reference tables, and a distributed SQL query engine. The query engine parallelizes SQL queries across multiple servers in a database cluster to deliver results with reduced response times, even for data-intensive applications. For more information, see the [Citus Data website](http://docs.citusdata.com/en/v10.1/).
-
-
-
+Citus is a PostgreSQL-based distributed RDBMS. Is an open source extension build on top of PostgreSQL, it transform a PostgreSQL database into a distributed environment to enable the horizontal scalability, Citus employs distributed tables, reference tables, and a distributed SQL query engine. The query engine parallelizes SQL queries across multiple servers in a database cluster to deliver results with reduced response times, even for data-intensive applications. For more information, see the [Citus Data website](http://docs.citusdata.com/en/v10.1/).
 
 Requirements
 ------------
@@ -256,7 +249,6 @@ kubectl exec -it  mobilitydb-aws-7d745544dd-dkm7k -- psql -h 192.168.45.32 -U po
 
 ```
 ### Testing MobilityDB
-.....
 To enhance the capabilities of MobilityDB queries, a single-node Citus setup has been implemented. This configuration establishes shards for distributed tables, thereby augmenting the overall query performance.
 To facilitate the simulation of MobilityDB queries, a straightforward dataset derived from AIS (Automatic Identification System) data has been prepared. This dataset has been meticulously curated to enable the emulation of MobilityDB queries. You can access this dataset [here](https://github.com/MobilityDB/MobilityDB-AWS/tree/master/data). You can mount more data in the /mnt/data from host machine to the Cloud in order to test complex analytics queries.  
 Also we have prepared the MobilityDB environement in order to use the queries of the AIS workshop. The extension MobilityDB and citus is created, the table aisinput already created and filled with the mobility_dataset.csv. Finally the aisinput is partitioned using Citus distribute table as single node. 
