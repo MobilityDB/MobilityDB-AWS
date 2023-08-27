@@ -2,9 +2,7 @@
 
 This repository show how to distributes PostgreSQL database on Elastic Kubernetes Service (EKS) provided by AWS cloud provider. The goal is to scaling moving object database supported by MobilityDB extension for PostgreSQL in order to idealize the performance. We have chosen Citus extension for PostgreSQL, to partitioning the data and distributing the query across the cluster.
 
-
-[MobilityDB](https://github.com/ULB-CoDE-WIT/MobilityDB) is an open source software program that adds support for temporal and spatio-temporal objects to the [PostgreSQL](https://www.postgresql.org/) database and its spatial extension [PostGIS](http://postgis.net/).
-Citus is a PostgreSQL-based distributed RDBMS. Is an open source extension build on top of PostgreSQL, it transform a PostgreSQL database into a distributed environment to enable the horizontal scalability, Citus employs distributed tables, reference tables, and a distributed SQL query engine. The query engine parallelizes SQL queries across multiple servers in a database cluster to deliver results with reduced response times, even for data-intensive applications. For more information, see the [Citus Data website](http://docs.citusdata.com/en/v10.1/).
+[MobilityDB](https://github.com/ULB-CoDE-WIT/MobilityDB) is an open-source software that extends the PostgreSQL database, including its spatial extension [PostGIS](http://postgis.net/), to support temporal and spatio-temporal objects. [Citus](http://docs.citusdata.com/en/v10.1/) is an open-source extension built on PostgreSQL, transforming it into a distributed RDBMS. It introduces horizontal scalability through the use of distributed tables, reference tables, and a distributed SQL query engine. This query engine parallelizes SQL queries across a database cluster's multiple servers, yielding reduced response times for data-intensive applications.
 
 Requirements
 ------------
